@@ -268,7 +268,7 @@ async function loadAllBookings() {
     } catch (error) {
         console.error('❌ Ошибка загрузки всех записей:', error);
     }
-}а
+}
 
 // Загрузка записей на сегодня
 async function loadTodayBookings() {
@@ -573,4 +573,5 @@ function exportBookings() {
 function formatDisplayDate(dateStr) {
     const date = new Date(dateStr);
     return date.toLocaleDateString('ru-RU');
+
 }
