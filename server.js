@@ -5,7 +5,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const bcrypt = require('bcryptjs');
 const saltRounds = 10; // Сложность хеширования
 const requestTimestamps = {};
@@ -35,7 +35,7 @@ app.get('/admin.html', (req, res) => {
     }
 
     console.log('✅ Доступ разрешен');
-    res.sendFile(path.join(__dirname, '../public/admin.html'));
+    res.sendFile(path.join(__dirname, 'public', 'admin.html'));
 });
 
 // ==================== АВТОРИЗАЦИЯ АДМИНА ====================
@@ -776,7 +776,10 @@ function validateBookingData(userId, date, time) {
     }
     return errors;
 }
-
+// Обслуживание главной страницы
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 // Запуск сервера
 app.listen(PORT, () => {
     console.log(`🚀 Сервер запущен на http://localhost:${PORT}`);
@@ -793,3 +796,4 @@ process.on('SIGINT', () => {
     });
 
 });
+
