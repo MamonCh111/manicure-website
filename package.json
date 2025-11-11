@@ -1,0 +1,23 @@
+{
+  "name": "manicure-website",
+  "version": "1.0.0",
+  "description": "Сайт для записи на маникюр",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "sqlite3": "^5.1.6",
+    "cors": "^2.8.5",
+    "cookie-parser": "^1.4.7",
+    "bcryptjs": "^2.4.3"
+  },
+  "engines": {
+    "node": "18.x"
+  },
+  "keywords": [ "manicure", "booking", "beauty" ],
+  "author": "Your Name",
+  "license": "MIT"
+}

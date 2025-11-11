@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<header>
+    <h1> Маникюр</h1>
+    <p>Привет, меня зовут Алиса и я делаю маникюр в Кирове</p>
+    <div style="margin-top: 10px;">
+        
+    </div>
+</header>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Маникюрный салон - Запись онлайн</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Запись онлайн ниже</h1>
+            <p>Или по номеру тел.: +8 (922) 66 00 324; по telegram: @ghosttttsu
+          </p>
+        </header>
+
+        <!-- Секция календаря -->
+        <section id="calendar-section">
+            <h2>Выберите дату и время</h2>
+            <div class="calendar-controls">
+                <button id="prev-month">←</button>
+                <span id="current-month">Сентябрь 2024</span>
+                <button id="next-month">→</button>
+            </div>
+            <div class="calendar">
+    <div class="calendar-header">
+        <div class="calendar-header-day">Пн</div>
+        <div class="calendar-header-day">Вт</div>
+        <div class="calendar-header-day">Ср</div>
+        <div class="calendar-header-day">Чт</div>
+        <div class="calendar-header-day">Пт</div>
+        <div class="calendar-header-day">Сб</div>
+        <div class="calendar-header-day">Вс</div>
+    </div>
+    <div id="calendar-grid" class="calendar-grid"></div>
+</div>
+        </section>
+
+        <!-- Секция авторизации -->
+        <section id="auth-section" class="auth-section">
+            <h3>Для записи необходимо войти</h3>
+            <div class="auth-form">
+                <input type="text" id="username" placeholder="Имя пользователя" maxlength="20">
+                <input type="password" id="password" placeholder="Пароль">
+                <div class="auth-buttons">
+                    <button id="register-btn">Регистрация</button>
+                    <button id="login-btn">Вход</button>
+                </div>
+            </div>
+            <div id="auth-message" class="message"></div>
+        </section>
+
+        <!-- Секция бронирования (показывается после входа) -->
+        <section id="booking-section" class="booking-section" style="display: none;">
+            <h3>Забронировать время</h3>
+            <div id="selected-date" class="selected-date"></div>
+            <div id="time-slots" class="time-slots"></div>
+            <div id="booking-message" class="message"></div>
+        </section>
+
+        <!-- Секция моих записей -->
+        <section id="my-bookings-section" class="my-bookings" style="display: none;">
+            <h3>Мои записи</h3>
+            <div id="my-bookings-list"></div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

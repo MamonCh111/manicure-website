@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Панель администратора - Маникюрный салон</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+    .admin-container { max-width: 1200px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 20px 0; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .stat-number { font-size: 2em; font-weight: bold; color: #e91e63; }
+    .bookings-list { background: white; padding: 20px; border-radius: 10px; margin: 20px 0; }
+    .booking-admin-item { padding: 15px; margin: 10px 0; background: #f5f5f5; border-radius: 5px; display: flex; justify-content: space-between; align-items: center; }
+    .filters { display: flex; gap: 15px; margin: 20px 0; flex-wrap: wrap; }
+    .admin-actions { margin: 20px 0; }
+
+    /* Стили модального окна - ТОЛЬКО ОДИН РАЗ! */
+    #workingHoursModal {
+        position: fixed;
+        z-index: 10000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        display: none;
+    }
+    
+    #workingHoursModal .modal-content {
+        background-color: white;
+        margin: 10% auto;
+        padding: 0;
+        border-radius: 10px;
+        width: 90%;
+        max-width: 500px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        border: 2px solid #e91e63;
+    }
+    
+    #workingHoursModal .modal-header {
+        padding: 15px 20px;
+        background: #e91e63;
+        color: white;
+        border-radius: 8px 8px 0 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    #workingHoursModal .modal-header h3 {
+        margin: 0;
+        font-size: 18px;
+    }
+    
+    #workingHoursModal .close {
+        font-size: 24px;
+        font-weight: bold;
+        cursor: pointer;
+        background: none;
+        border: none;
+        color: white;
+    }
+    
+    #workingHoursModal .close:hover {
+        color: #ffeb3b;
+    }
+    
+    #workingHoursModal .modal-body {
+        padding: 20px;
+        max-height: 400px;
+        overflow-y: auto;
+        background: white;
+    }
+    
+    #workingHoursModal .modal-actions {
+        padding: 15px 20px;
+        background: #f5f5f5;
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        border-radius: 0 0 8px 8px;
+    }
+    
+    /* Стили для элементов формы */
+    .working-day-item {
+        margin: 10px 0;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: #f9f9f9;
+        transition: background-color 0.3s;
+    }
+    
+    .working-day-item:hover {
+        background: #f0f0f0;
+    }
+    
+    .time-inputs {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        transition: all 0.3s ease;
+    }
+    
+    .time-inputs input[type="time"] {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+</style>
+</head>
+<body>
+    <div class="container admin-container">
+        <header>
+            <h1>👑 Панель администратора</h1>
+            <p>Управление записями и расписанием</p>
+        </header>
+
+        <!-- Статистика -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="today-bookings">0</div>
+                <div>Записей сегодня</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="week-bookings">0</div>
+                <div>Записей на неделю</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="total-clients">0</div>
+                <div>Всего клиентов</div>
+            </div>
+        </section>
+
+        <!-- Все активные записи -->
+        <section class="bookings-list">
+            <h3>📋 Все активные записи</h3>
+            <div class="admin-actions">
+                <button onclick="loadAllActiveBookings()">Обновить список</button>
+                <button onclick="exportBookings()" class="export-btn">📤 Экспорт в CSV</button>
+            </div>
+            <div id="all-bookings-container">
+                <div>Нажмите "Обновить список" чтобы увидеть все записи</div>
+            </div>
+        </section>
+
+        <!-- Фильтры -->
+        <section class="filters">
+            <input type="date" id="filter-date" class="filter-input">
+            <button onclick="loadBookings()">Показать записи</button>
+            <button onclick="loadTodayBookings()">Сегодня</button>
+            <button onclick="loadAllBookings()">Все записи</button>
+        </section>
+
+        <!-- Список записей по дате -->
+        <section class="bookings-list">
+            <h3>Записи клиентов</h3>
+            <div id="bookings-container">
+                <div>Выберите дату для просмотра записей</div>
+            </div>
+        </section>
+
+        <!-- Управление расписанием -->
+        <section class="admin-actions">
+            <h3>Управление рабочим расписанием</h3>
+            <button onclick="showWorkingHoursModal()">🕐 Рабочие часы</button>
+        </section>
+
+        <!-- Модальное окно -->
+        <div id="workingHoursModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>🕐 Редактирование рабочих часов</h3>
+                    <span class="close" onclick="closeWorkingHoursModal()">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div id="working-hours-form">
+                        <!-- Форма будет здесь -->
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button onclick="closeWorkingHoursModal()" class="btn-secondary">Отмена</button>
+                    <button onclick="saveWorkingHours()" 
+        style="background: #4caf50; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer;">
+    💾 Сохранить изменения
+</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

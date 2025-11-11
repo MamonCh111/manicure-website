@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход в админку - Маникюрный салон</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .login-input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: #e91e63;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .login-btn:hover {
+            background: #d81b60;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login-container">
+            <h2>🔐 Вход в админку</h2>
+            <p>Только для администраторов</p>
+            
+            <input type="password" id="adminPassword" class="login-input" 
+                   placeholder="Пароль администратора">
+            
+            <button onclick="adminLogin()" class="login-btn">Войти</button>
+            
+            <div id="adminMessage" style="margin-top: 15px; color: red;"></div>
+        </div>
+    </div>
+
+    <script>
+        async function adminLogin() {
+            const password = document.getElementById('adminPassword').value;
+            const messageEl = document.getElementById('adminMessage');
+
+            if (!password) {
+                messageEl.textContent = 'Введите пароль';
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/admin/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ password: password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Сохраняем токен
+                    localStorage.setItem('adminToken', data.token);
+                    localStorage.setItem('adminUser', 'admin');
+                    
+                    // Перенаправляем в админку
+                    window.location.href = '/admin.html';
+                } else {
+                    messageEl.textContent = '❌ ' + data.error;
+                }
+            } catch (error) {
+                messageEl.textContent = '❌ Ошибка соединения';
+            }
+        }
+
+        // Ввод по Enter
+        document.getElementById('adminPassword').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                adminLogin();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,289 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f9f9f9;
+/* Новый фон с картинкой */
+    background-image: url('https://avatars.mds.yandex.net/i?id=e90aa3c1ae965690814e016d7f171c6f_l-7801542-images-thumbs&n=13');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    background: rgba(255, 255, 255, 0.3); /* Полупрозрачный белый */
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    backdrop-filter: blur(10px); /* Размытие фона */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+h1 {
+    color: #e91e63;
+    margin-bottom: 10px;
+}
+
+/* Календарь */
+.calendar-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.3);
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.calendar {
+    background: rgba(255, 255, 255, 0.3);
+    padding: 25px;
+    margin: 20px 0;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.calendar-day {
+    background: rgba(255, 255, 255, 0.3);
+    padding: 25px;
+    margin: 20px 0;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.calendar-day:hover {
+    background-color: #f0f0f0;
+}
+
+.calendar-day.available {
+    background-color: #e8f5e8;
+    border-color: #4caf50;
+}
+
+.calendar-day.booked {
+    background-color: #ffebee;
+    border-color: #f44336;
+    cursor: not-allowed;
+}
+
+.calendar-day.today {
+    border: 2px solid #e91e63;
+}
+
+/* Формы */
+.auth-section, .booking-section, .my-bookings {
+    background: rgba(255, 255, 255, 0.3);
+    padding: 25px;
+    margin: 20px 0;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#login-btn, #register-btn {
+    background: #e91e63;
+    color: white;
+}
+
+#login-btn:hover, #register-btn:hover {
+    background: #c2185b;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* Временные слоты */
+.time-slots {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.time-slot {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.time-slot.available {
+    background: #e8f5e8;
+    border-color: #4caf50;
+}
+
+.time-slot.booked {
+    background: #ffebee;
+    border-color: #f44336;
+    cursor: not-allowed;
+}
+
+/* Сообщения */
+.message {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.message.success {
+    background: #e8f5e8;
+    color: #2e7d32;
+}
+
+.message.error {
+    background: #ffebee;
+    color: #c62828;
+}
+
+/* Мои записи */
+.booking-item {
+    padding: 10px;
+    margin: 5px 0;
+    background: #f5f5f5;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cancel-btn {
+    background: #f44336;
+    color: white;
+    padding: 5px 10px;
+    font-size: 12px;
+}
+.calendar-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.calendar-header-day {
+    padding: 10px;
+    background: #e91e63;
+    color: white;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
+.calendar-day-header {
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    background: #f5f5f5;
+    border-radius: 5px;
+}
+
+.calendar-day {
+    padding: 15px 10px;
+    text-align: center;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-height: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: white;
+}
+
+.calendar-day:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.calendar-day.available {
+    background-color: #e8f5e8;
+    border-color: #4caf50;
+}
+
+.calendar-day.available:hover {
+    background-color: #d4edda;
+}
+
+.calendar-day.booked {
+    background-color: #ffebee;
+    border-color: #f44336;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.calendar-day.today {
+    border: 2px solid #e91e63;
+    background: #ffeef3;
+}
+
+.calendar-day.empty {
+    background: transparent;
+    cursor: default;
+}
+
+.calendar-day.selected {
+    border: 2px solid #2196f3;
+    background: #e3f2fd;
+}
+.calendar-header, 
+.days-header,
+.week-days {
+    display: none !important;
+}
